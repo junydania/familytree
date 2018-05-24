@@ -1,0 +1,200 @@
+{
+    "people": [
+      {
+        "name": "Evan",
+        "sex": "Male",
+        "root_id": null,
+        "parent_id": 10,
+        "partner_id": 10
+      },
+      {
+        "name": "Diana",
+        "sex": "Female",
+        "root_id": null,
+        "parent_id": 10,
+        "partner_id": 10
+      },
+      {
+        "name": "John",
+        "sex": "Male",
+        "root_id": 10,
+        "parent_id": 20,
+        "partner_id": 20
+      },
+      {
+        "name": "Alex",
+        "sex": "Male",
+        "root_id": 10,
+        "parent_id": 21,
+        "partner_id": 21
+      },
+      {
+        "name": "Nancy",
+        "sex": "Female",
+        "root_id": null,
+        "parent_id": 21,
+        "partner_id": 21
+      },
+      {
+        "name": "Joe",
+        "sex": "Male",
+        "root_id": 10,
+        "parent_id": 22,
+        "partner_id": 22
+      },
+      {
+        "name": "Niki",
+        "sex": "Female",
+        "root_id": null,
+        "parent_id": 22,
+        "partner_id": 22
+      },
+      {
+        "name": "Adam",
+        "sex": "Male",
+        "root_id": 10,
+        "parent_id": 23,
+        "partner_id": 23
+      },
+      {
+        "name": "Nisha",
+        "sex": "Female",
+        "root_id": null,
+        "parent_id": 23,
+        "partner_id": 23
+      },
+      {
+        "name": "Jacob",
+        "sex": "Male",
+        "root_id": 21,
+        "parent_id": 31,
+        "partner_id": 31
+      },
+      {
+        "name": "Rufi",
+        "sex": "Female",
+        "root_id": null,
+        "parent_id": 31,
+        "partner_id": 31
+      },
+      {
+        "name": "Shaun",
+        "sex": "Male",
+        "root_id": 21,
+        "parent_id": 32,
+        "partner_id": 32
+      },
+      {
+        "name": "Piers",
+        "sex": "Male",
+        "root_id": 22,
+        "parent_id": 33,
+        "partner_id": 33
+      },
+      {
+        "name": "Pippa",
+        "sex": "Female",
+        "root_id": null,
+        "parent_id": 33,
+        "partner_id": 33
+      },
+      {
+        "name": "Sally",
+        "sex": "Female",
+        "root_id": 22,
+        "parent_id": 34,
+        "partner_id": 34
+      },
+      {
+        "name": "Owen",
+        "sex": "Male",
+        "root_id": null,
+        "parent_id": 34,
+        "partner_id": 34
+      },
+      {
+        "name": "Ruth",
+        "sex": "Female",
+        "root_id": 23,
+        "parent_id": 35,
+        "partner_id": 35
+      },
+      {
+        "name": "Neil",
+        "sex": "Male",
+        "root_id": null,
+        "parent_id": 35,
+        "partner_id": 35
+      },
+      {
+        "name": "William",
+        "sex": "Male",
+        "root_id": 23,
+        "parent_id": 36,
+        "partner_id": 36
+      },
+      {
+        "name": "Rose",
+        "sex": "Female",
+        "root_id": null,
+        "parent_id": 36,
+        "partner_id": 36
+      },
+      {
+        "name": "Paul",
+        "sex": "Male",
+        "root_id": 23,
+        "parent_id": 37,
+        "partner_id": 37
+      },
+      {
+        "name": "Zoe",
+        "sex": "Male",
+        "root_id": null,
+        "parent_id": 37,
+        "partner_id": 37
+      },
+      {
+        "name": "Sarah",
+        "sex": "Female",
+        "root_id": 33,
+        "parent_id": 41,
+        "partner_id": 41
+      },
+      {
+        "name": "Peter",
+        "sex": "Male",
+        "root_id": null,
+        "parent_id": 41,
+        "partner_id": 41
+      },
+      {
+        "name": "Bern",
+        "sex": "Male",
+        "root_id": 31,
+        "parent_id": 42,
+        "partner_id": 42
+      },
+      {
+        "name": "Sophia",
+        "sex": "Female",
+        "root_id": 31,
+        "parent_id": 43,
+        "partner_id": 43
+      },
+      {
+        "name": "George",
+        "sex": "Male",
+        "root_id": null,
+        "parent_id": 43,
+        "partner_id": 43
+      },
+      {
+        "name": "Roger",
+        "sex": "Male",
+        "root_id": 37,
+        "parent_id": 44,
+        "partner_id": 44
+      }
+    ]
+  }
