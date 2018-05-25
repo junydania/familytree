@@ -93,4 +93,54 @@ class Relation
         return sisters_array
     end
 
+    def has_cousins
+        cousins_array = []
+        if @person.capitalize == "Person" && @relation.capitalize == "Relation" && @relationship_type.capitalize == "Cousins" or @relationship_type.capitalize == "Cousin"
+            first_person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
+            first_person_root_id = first_person_record["root_id"]
+            parent_tree = @@family_record.find_all { |parent| parent["parent_id"] == first_person_root_id }
+            parent_upper_level_root_id = []
+            parent_tree.each do |parent|
+                parent.each do |key, value|
+                    if key == "root_id"
+                        parent_upper_level_root_id.push(value)
+                    end
+                end
+            end
+            parent_root_id = nil
+            parent_root = parent_upper_level_root_id.each do |root_id|
+                            unless root_id.nil?
+                                parent_root_id = root_id
+                            end
+                          end
+            parent_name = @@family_record.detect { |parent| parent["root_id"] == parent_root_id && parent["parent_id"] == first_person_root_id }
+            parent_siblings = @@family_record.find_all { |sibling| sibling["root_id"] == parent_root_id && sibling["name"] != parent_name }
+            siblings_id_array = []
+            parent_siblings_parent_id = parent_siblings.each do |sibling|
+                                            sibling.each do| key, value|
+                                                if key == "parent_id"
+                                                    siblings_id_array.push(value)
+                                                end
+                                            end
+                                        end
+            siblings_id_array.each do |parent_id|
+                cousins_record = @@family_record.find_all { |cousin| cousin["root_id"] == parent_id }
+                cousins_record.each do |cousin|
+                    cousin.each do |key, value|
+                        if key == "name"
+                            cousins_array.push(value)
+                        end
+                    end
+                end
+            end
+        else
+            puts "Unrecognized entry! Try Again!"
+        end
+        return cousins_array
+    end
 end
+
+
+
+
+

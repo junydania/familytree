@@ -67,7 +67,6 @@ class FamilyTree
   end
 
   def find
-    # binding.pry
     puts "\nFind Family Member\n\n".upcase
     print "Find Family Member in this format - "
     print "Person=Sophia Relation=Husband \n"
@@ -112,8 +111,19 @@ class FamilyTree
         sister_name = sisters[0]
         puts "#{received_input[1][1].capitalize}=#{sister_name}"
       end
+    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Cousins" or received_input[1][1].capitalize == "Cousin"
+      new_find = Relation.new(received_input)
+      cousins = new_find.has_cousins
+      if cousins.length > 1
+        cousins_names = cousins.join(", ")
+        puts "#{received_input[1][1].capitalize}=#{cousins_names}"
+      else
+        cousin_name = cousins[0]
+        puts "#{received_input[1][1].capitalize}=#{cousin_name}"
+      end
     end
   end
+
 
 
   def add
@@ -141,7 +151,6 @@ class FamilyTree
         puts "#{husband_name} is not a member of this family!"
         exit!
       end
-
     elsif received_input[0][0].capitalize == "Wife" and received_input[1][0].capitalize == "Husband"
       sex = "Male"
       wife_name = received_input[0][1].capitalize
