@@ -121,6 +121,10 @@ class FamilyTree
         cousin_name = cousins[0]
         puts "#{received_input[1][1].capitalize}=#{cousin_name}"
       end
+    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Father"
+      new_find = Relation.new(received_input)
+      father_name = new_find.has_father
+      puts "#{received_input[1][1].capitalize}=#{father_name}"
     end
   end
 

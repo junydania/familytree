@@ -138,6 +138,20 @@ class Relation
         end
         return cousins_array
     end
+
+    def has_father
+        father_name = nil
+        if @person.capitalize == "Person" && @relation.capitalize == "Relation" && @relationship_type.capitalize == "Father"
+            person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
+            person_root_id = person_record["root_id"]
+            father_record = @@family_record.detect { |father| father["parent_id"] == person_root_id && father["sex"] == "Male"}
+            father_name = father_record["name"]
+        else
+            puts "Unrecognized entry! Try Again!"
+        end
+        return father_name
+    end
+
 end
 
 

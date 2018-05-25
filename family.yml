@@ -139,7 +139,7 @@ partner_id: 41
 ---
 name: Peter
 sex: Male
-root_id: 
+root_id: 22
 parent_id: 41
 partner_id: 41
 ---
