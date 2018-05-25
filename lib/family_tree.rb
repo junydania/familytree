@@ -25,7 +25,6 @@ class FamilyTree
     end
   end
 
-
   def launch!
     introduction
     result = nil
@@ -39,7 +38,7 @@ class FamilyTree
   def introduction
     puts "\n\n<<< Welcome to the Indiana's Family Tree>>> \n\n"
     puts "This is an interactive guide to help you Identify your relatives. \n\n"
-    puts "Type continue to Proceed. \n\n"
+    puts "Tap Enter to Proceed. \n\n"
  end
 
   def get_action
@@ -68,31 +67,50 @@ class FamilyTree
   end
 
   def find
-    binding.pry
+    # binding.pry
     puts "\nFind Family Member\n\n".upcase
     print "Find Family Member in this format - "
     print "Person=Sophia Relation=Husband \n"
     received_input = Family.member_input
     if received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Sons" or received_input[1][1].capitalize == "Son"
       new_find = Relation.new(received_input)
-      sons = new_find.check_sons
+      sons = new_find.has_sons
       if sons.length > 1
         sons_names = sons.join(", ")
-        puts "#{received_input[1][0].capitalize}=#{sons_names}"
+        puts "#{received_input[1][1].capitalize}=#{sons_names}"
       else
         son_name = sons[0]
         puts "#{received_input[1][1].capitalize}=#{son_name}"
       end
-    end
-    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Daughters" or received_input[1][1].capitalize == "Daughters"
+    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Daughters" or received_input[1][1].capitalize == "Daughter"
       new_find = Relation.new(received_input)
-      daughters = new_find.check_daughters
+      daughters = new_find.has_daughters
       if daughters.length > 1
         daughters_names = daughters.join(", ")
-        puts "#{received_input[1][0].capitalize}=#{sons_names}"
+        puts "#{received_input[1][1].capitalize}=#{daughters_names}"
       else
-        son_name = sons[0]
-        puts "#{received_input[1][1].capitalize}=#{son_name}"
+        daughter_name = daughters[0]
+        puts "#{received_input[1][1].capitalize}=#{daughter_name}"
+      end
+    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Brothers" or received_input[1][1].capitalize == "Brother"
+      new_find = Relation.new(received_input)
+      brothers = new_find.has_brothers
+      if brothers.length > 1
+        brothers_names = brothers.join(", ")
+        puts "#{received_input[1][1].capitalize}=#{brothers_names}"
+      else
+        brother_name = brothers[0]
+        puts "#{received_input[1][1].capitalize}=#{brother_name}"
+      end
+    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Sisters" or received_input[1][1].capitalize == "Sister"
+      new_find = Relation.new(received_input)
+      sisters = new_find.has_sisters
+      if sisters.length > 1
+        sisters_names = sisters.join(", ")
+        puts "#{received_input[1][1].capitalize}=#{sisters_names}"
+      else
+        sister_name = sisters[0]
+        puts "#{received_input[1][1].capitalize}=#{sister_name}"
       end
     end
   end
@@ -144,7 +162,6 @@ class FamilyTree
         puts "#{wife_name} is not a member of this family!"
         exit!
       end
-
     elsif received_input[0][0].capitalize == "Mother" and received_input[1][0].capitalize == "Son"
       sex = "Male"
       mother_name = received_input[0][1].capitalize

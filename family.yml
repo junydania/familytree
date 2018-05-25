@@ -43,13 +43,13 @@ partner_id: 22
 ---
 name: Adam
 sex: Male
-root_id: 10
+root_id:
 parent_id: 23
 partner_id: 23
 ---
 name: Nisha
 sex: Female
-root_id: 
+root_id: 10
 parent_id: 23
 partner_id: 23
 ---
