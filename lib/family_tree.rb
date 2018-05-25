@@ -68,26 +68,6 @@ class FamilyTree
   #   end
   # end
 
-  # def list(args=[])
-  #   sort_order = args.shift
-  #   sort_order ||= "name"
-  #   sort_order = "name" unless ['name','cuisine', 'price'].include?(sort_order)
-  #   output_action_header("Listing Restaurants")
-  #   restaurant = Restaurant.saved_restaurants
-  #   restaurant.sort! do |r1, r2|
-  #     case sort_order
-  #     when 'name'
-  #       r1.name.downcase <=> r2.name.downcase
-  #     when 'cuisine'
-  #       r1.cuisine.downcase <=> r2.cuisine.downcase
-  #     when 'price'
-  #       r1.price.to_i <=> r2.price.to_i
-  #     end
-  #   end
-  #   output_restaurant_table(restaurant)
-  #   puts "Sort using: 'list cuisine'\n\n"
-  # end
-
   # def find(keyword="")
   #   output_action_header("Find a restaurant")
   #   if keyword
@@ -110,7 +90,44 @@ class FamilyTree
 
   def add
     puts "\nAdd New Family Member\n\n".upcase
-      restaurant = Restaurant.build_from_questions
+      family_member = Family.build_from_input
+      if family_member[0][0].capitalize == "Husband" and family_member[1][0].capitalize == "Wife"
+        sex = "Female"
+        husband_name = family_member[0][1].capitalize
+        data = Family.load_family_record
+        husband_record = data.detect{ |husband| husband["name"] == husband_name  }
+        if husband_record != nil 
+          wife_name = family_member[1][1].capitalize
+          new_person = Person.new(wife_name, sex)
+          parent_partner_id = husband_record["partner_id"]
+          new_member = { "name" => new_person.name,
+                         "sex" => new_person.sex,
+                         "root_id" => '',
+                         "parent_id" => parent_partner_id,
+                         "partner_id" => parent_partner_id            
+          }
+          Family.save(new_member, wife_name)          
+        elsif husband_record == nil 
+          puts "#{husband_name} is not a member of this family!"
+          exit!
+        end
+      elsif family_member[0][0].capitalize == "Wife" and family_member[1][0].capitalize == "Husband"
+        sex = "Male"
+        wife_name = family_member[0][1].capitalize
+        data = Family.load_family_record
+        wife_record = data.detect{ |wife| wife["name"] == wife_name  }
+
+
+      end
+
+
+
+
+
+
+
+
+
     if restaurant.save
       puts "\nRestaurant Added\n\n"
     else
@@ -119,12 +136,9 @@ class FamilyTree
   end
 
 
-
-
- 
-  # def conclusion
-  #   puts "\n<<< Goodbye and Bon Appetit! >>> \n\n\n"
-  # end
+  def conclusion
+    puts "\n<<< Goodbye >>> \n\n\n"
+  end
 
   # private
 

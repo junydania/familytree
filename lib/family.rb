@@ -2,7 +2,6 @@ class Family
   
   @@filepath = nil
   @@people = nil
-  @@new_family_member = {}
 
   def self.filepath=(path=nil)
     @@filepath = File.join(APP_ROOT,path)
@@ -30,20 +29,14 @@ class Family
   end
 
   def self.build_from_input
-    args = {}
     print "Enter a new family member in the format"
     print "Mother=Sophia Son=Thomas"
-
-    args[:name] = gets.chomp.split
-
-    print "Cuisine type: "
-    args[:cuisine] = gets.chomp.strip
-
-    print "Average price: "
-    args[:price] = gets.chomp.strip
-
-    return self.new(args)
+    entry = gets.chomp.split(" ")
+    args = entry.map{ |i| i.split '=' }.to_a
+    # return self.new(args)
+    return args
   end
+
 
 #   def self.saved_restaurants
 #     restaurants = []
@@ -64,10 +57,10 @@ class Family
 #     return self
 #   end
 
-  def save
+  def self.save(new_member, name)
     return false unless Family.file_useable?
-    File.open("family.yml","a") { |f| f << @@new_member.to_yaml }
+    File.open("family.yml","a") { |f| f << new_member.to_yaml }
     end
-    return true
+    puts "Welcome to the family, #{name}!"
   end
 end
