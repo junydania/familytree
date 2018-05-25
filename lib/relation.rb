@@ -152,6 +152,99 @@ class Relation
         return father_name
     end
 
+    def has_mother
+        mother_name = nil
+        if @person.capitalize == "Person" && @relation.capitalize == "Relation" && @relationship_type.capitalize == "Mother"
+            person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
+            person_root_id = person_record["root_id"]
+            mother_record = @@family_record.detect { |mother| mother["parent_id"] == person_root_id && mother["sex"] == "Female"}
+            mother_name = mother_record["name"]
+        else
+            puts "Unrecognized entry! Try Again!"
+        end
+        return mother_name
+    end
+
+    def has_aunts
+        aunts_array = []
+        if @person.capitalize == "Person" && @relation.capitalize == "Relation" && @relationship_type.capitalize == "Aunts" || @relationship_type.capitalize == "Aunt"
+            first_person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
+            first_person_root_id = first_person_record["root_id"]
+            parent_tree = @@family_record.find_all { |parent| parent["parent_id"] == first_person_root_id }
+            parent_upper_level_root_id = []
+            parent_tree.each do |parent|
+                parent.each do |key, value|
+                    if key == "root_id"
+                        parent_upper_level_root_id.push(value)
+                    end
+                end
+            end
+            parent_root_id = nil
+            parent_root = parent_upper_level_root_id.each do |root_id|
+                            unless root_id.nil?
+                                parent_root_id = root_id
+                            end
+                          end
+            parent_name = @@family_record.detect { |parent| parent["root_id"] == parent_root_id && parent["parent_id"] == first_person_root_id }
+            parent_siblings = @@family_record.find_all { |sibling| sibling["root_id"] == parent_root_id && sibling["name"] != parent_name && sibling["sex"] == "Female" }
+            if parent_siblings.any? == true
+                parent_siblings.each do |parent_sibling|
+                    parent_sibling.each do |key, value|
+                        if key == "name"
+                            aunts_array.push(value)
+                        end
+                    end
+                end 
+                return aunts_array
+            else
+                return "#{@person_name} doesn't have an aunt"
+            end             
+        else
+            puts "Unrecognized entry! Try Again!"
+        end
+    end
+
+    def has_uncles
+        uncles_array = []
+        if @person.capitalize == "Person" && @relation.capitalize == "Relation" && @relationship_type.capitalize == "Uncles" || @relationship_type.capitalize == "Uncle"
+            first_person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
+            first_person_root_id = first_person_record["root_id"]
+            parent_tree = @@family_record.find_all { |parent| parent["parent_id"] == first_person_root_id }
+            parent_upper_level_root_id = []
+            parent_tree.each do |parent|
+                parent.each do |key, value|
+                    if key == "root_id"
+                        parent_upper_level_root_id.push(value)
+                    end
+                end
+            end
+            parent_root_id = nil
+            parent_root = parent_upper_level_root_id.each do |root_id|
+                            unless root_id.nil?
+                                parent_root_id = root_id
+                            end
+                          end
+            parent_name = @@family_record.detect { |parent| parent["root_id"] == parent_root_id && parent["parent_id"] == first_person_root_id }
+            parent_siblings = @@family_record.find_all { |sibling| sibling["root_id"] == parent_root_id && sibling["name"] != parent_name && sibling["sex"] == "Male" }
+            if parent_siblings.any? == true
+                parent_siblings.each do |parent_sibling|
+                    parent_sibling.each do |key, value|
+                        if key == "name"
+                            uncles_array.push(value)
+                        end
+                    end
+                end 
+                return uncles_array
+            else
+                return "#{@person_name} doesn't have an uncle"
+            end             
+        else
+            puts "Unrecognized entry! Try Again!"
+        end
+    end
+
+
+
 end
 
 

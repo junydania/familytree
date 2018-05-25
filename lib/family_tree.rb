@@ -125,10 +125,40 @@ class FamilyTree
       new_find = Relation.new(received_input)
       father_name = new_find.has_father
       puts "#{received_input[1][1].capitalize}=#{father_name}"
+    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Mother"
+      new_find = Relation.new(received_input)
+      mother_name = new_find.has_mother
+      puts "#{received_input[1][1].capitalize}=#{mother_name}"
+    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Aunt" || received_input[1][1].capitalize == "Aunts"
+      new_find = Relation.new(received_input)
+      aunts = new_find.has_aunts
+      if aunts.kind_of?(Array) == true
+        if aunts.length > 1
+          aunts_names = aunts.join(", ")
+          puts "#{received_input[1][1].capitalize}=#{aunts_names}"
+        else
+          aunt_name = aunts[0]
+          puts "#{received_input[1][1].capitalize}=#{aunt_name}"
+        end
+      else
+        puts aunts
+      end
+    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Uncle" || received_input[1][1].capitalize == "Uncles"
+      new_find = Relation.new(received_input)
+      uncles = new_find.has_uncles
+      if uncles.kind_of?(Array) == true
+        if uncles.length > 1
+          uncles_names = uncles.join(", ")
+          puts "#{received_input[1][1].capitalize}=#{uncles_names}"
+        else
+          uncle_name = uncles[0]
+          puts "#{received_input[1][1].capitalize}=#{uncle_name}"
+        end
+      else
+        puts uncles
+      end
     end
   end
-
-
 
   def add
     puts "\nAdd New Family Member\n\n".upcase
@@ -202,7 +232,6 @@ class FamilyTree
   def conclusion
     puts "\n<<< Goodbye >>> \n\n\n"
   end
-
 end
 
 
