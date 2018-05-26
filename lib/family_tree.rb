@@ -157,6 +157,34 @@ class FamilyTree
       else
         puts uncles
       end
+    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Grandfather"
+      new_find = Relation.new(received_input)
+      grandfather_name = new_find.has_grandfather
+      if grandfather_name != "No Grandfather"
+          puts "#{received_input[1][1].capitalize}=#{grandfather_name}"
+      else
+          puts "#{received_input[0][1].capitalize} doesn't have a grandfather"
+      end     
+    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Grandmother"
+      new_find = Relation.new(received_input)
+      grandmother_name = new_find.has_grandmother
+      if grandmother_name != "No Grandmother"
+          puts "#{received_input[1][1].capitalize}=#{grandmother_name}"
+      else
+          puts "#{received_input[0][1].capitalize} doesn't have a grandmother"
+      end     
+    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Grandsons" or received_input[1][1].capitalize == "Grandson"
+      new_find = Relation.new(received_input)
+      grandsons = new_find.has_grandsons
+      if grandsons.length > 1
+        grandsons_names = grandsons.join(", ")
+        puts "#{received_input[1][1].capitalize}=#{grandsons_names}"
+      elsif grandsons.empty? == true
+        puts "#{received_input[0][1].capitalize} doesn't have grandsons"
+      elsif grandsons.length == 1
+        grandson_name = grandsons[0]
+        puts "#{received_input[1][1].capitalize}=#{grandson_name}"
+      end 
     end
   end
 

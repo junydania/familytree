@@ -243,8 +243,139 @@ class Relation
         end
     end
 
+    def has_grandfather
+        grandfather_name = nil
+        if @person.capitalize == "Person" && @relation.capitalize == "Relation" && @relationship_type.capitalize == "Grandfather"
+            first_person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
+            first_person_root_id = first_person_record["root_id"]
+            parent_tree = @@family_record.find_all { |parent| parent["parent_id"] == first_person_root_id }
+            parent_upper_level_root_id = []
+            parent_tree.each do |parent|
+                parent.each do |key, value|
+                    if key == "root_id"
+                        parent_upper_level_root_id.push(value)
+                    end
+                end
+            end
+            parent_root_id = nil
+            if parent_upper_level_root_id[0] == nil && parent_upper_level_root_id[1] == nil 
+                return "No Grandfather"
+            else
+                parent_upper_level_root_id.each do |root_id|
+                    unless root_id.nil?
+                        parent_root_id = root_id
+                    end
+                end
+                grandfather = @@family_record.detect{ |grandfather| grandfather["parent_id"] == parent_root_id && grandfather["sex"] == "Male" }
+                grandfather_name = grandfather["name"]
+                return grandfather_name                   
+            end     
+        else
+            puts "Unrecognized entry! Try Again!"
+        end
+    end
 
+    def has_grandmother
+        grandmother_name = nil
+        if @person.capitalize == "Person" && @relation.capitalize == "Relation" && @relationship_type.capitalize == "Grandmother"
+            first_person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
+            first_person_root_id = first_person_record["root_id"]
+            parent_tree = @@family_record.find_all { |parent| parent["parent_id"] == first_person_root_id }
+            parent_upper_level_root_id = []
+            parent_tree.each do |parent|
+                parent.each do |key, value|
+                    if key == "root_id"
+                        parent_upper_level_root_id.push(value)
+                    end
+                end
+            end
+            parent_root_id = nil
+            if parent_upper_level_root_id[0] == nil && parent_upper_level_root_id[1] == nil 
+                return "No Grandmother"
+            else
+                parent_upper_level_root_id.each do |root_id|
+                    unless root_id.nil?
+                        parent_root_id = root_id
+                    end
+                end
+                grandmother = @@family_record.detect{ |grandmother| grandmother["parent_id"] == parent_root_id && grandmother["sex"] == "Female" }
+                grandmother_name = grandmother["name"]
+                return grandmother_name                   
+            end     
+        else
+            puts "Unrecognized entry! Try Again!"
+        end
+    end
 
+    def has_grandsons
+        grandsons  = []
+        if @person.capitalize == "Person" && @relation.capitalize == "Relation" && @relationship_type.capitalize == "Grandsons"
+            grandparent_record = @@family_record.detect{ |person| person["name"] == @person_name  }
+            grandparent_parent_id = grandparent_record["parent_id"]
+            first_children_tree = @@family_record.find_all { |children| children["root_id"] == grandparent_parent_id }
+            lower_level_parent_ids = []
+            first_children_tree.each do |first_children|
+                first_children.each do |key, value|
+                    if key == "parent_id"
+                        lower_level_parent_ids.push(value)
+                    end
+                end
+            end
+            grandchildren = []
+            lower_level_parent_ids.each do |parent_id|
+                offspring = @@family_record.find_all { |children| children["root_id"] == parent_id && children["sex"] == "Male" }
+                grandchildren.push(offspring)
+            end
+            grandchildren.each do |grandchild|
+                grandchild.each do |person|
+                    person.each do |key, value|
+                        if key == "name"
+                            grandsons.push(value)
+                        end
+                    end
+                end 
+            end
+
+            return grandsons 
+        else
+            puts "Unrecognized entry! Try Again!"
+        end
+    end
+
+    def has_granddaughters
+        granddaughters  = []
+        if @person.capitalize == "Person" && @relation.capitalize == "Relation" && @relationship_type.capitalize == "Granddaughters" or @relationship_type.capitalize == "Granddaughter"
+            grandparent_record = @@family_record.detect{ |person| person["name"] == @person_name  }
+            grandparent_parent_id = grandparent_record["parent_id"]
+            first_children_tree = @@family_record.find_all { |children| children["root_id"] == grandparent_parent_id }
+            lower_level_parent_ids = []
+            first_children_tree.each do |first_children|
+                first_children.each do |key, value|
+                    if key == "parent_id"
+                        lower_level_parent_ids.push(value)
+                    end
+                end
+            end
+            grandchildren = []
+            lower_level_parent_ids.each do |parent_id|
+                offspring = @@family_record.find_all { |children| children["root_id"] == parent_id && children["sex"] == "Male" }
+                grandchildren.push(offspring)
+            end
+            grandchildren.each do |grandchild|
+                grandchild.each do |person|
+                    person.each do |key, value|
+                        if key == "name"
+                            grandsons.push(value)
+                        end
+                    end
+                end 
+            end
+
+            return granddaughters
+        else
+            puts "Unrecognized entry! Try Again!"
+        end
+    end
 end
 
 
