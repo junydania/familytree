@@ -185,6 +185,18 @@ class FamilyTree
         grandson_name = grandsons[0]
         puts "#{received_input[1][1].capitalize}=#{grandson_name}"
       end 
+    elsif received_input[0][0].capitalize == "Person" and received_input[1][1].capitalize == "Granddaughters" or received_input[1][1].capitalize == "Granddaughter"
+      new_find = Relation.new(received_input)
+      granddaughters = new_find.has_granddaughters
+      if granddaughters.length > 1
+        granddaughters_names = granddaughters.join(", ")
+        puts "#{received_input[1][1].capitalize}=#{granddaughters_names}"
+      elsif granddaughters.empty? == true
+        puts "#{received_input[0][1].capitalize} doesn't have granddaughters"
+      elsif granddaughters.length == 1
+        granddaughter_name = granddaughters[0]
+        puts "#{received_input[1][1].capitalize}=#{granddaughter_name}"
+      end 
     end
   end
 

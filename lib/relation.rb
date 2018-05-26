@@ -358,19 +358,18 @@ class Relation
             end
             grandchildren = []
             lower_level_parent_ids.each do |parent_id|
-                offspring = @@family_record.find_all { |children| children["root_id"] == parent_id && children["sex"] == "Male" }
+                offspring = @@family_record.find_all { |children| children["root_id"] == parent_id && children["sex"] == "Female" }
                 grandchildren.push(offspring)
             end
             grandchildren.each do |grandchild|
                 grandchild.each do |person|
                     person.each do |key, value|
                         if key == "name"
-                            grandsons.push(value)
+                            granddaughters.push(value)
                         end
                     end
                 end 
             end
-
             return granddaughters
         else
             puts "Unrecognized entry! Try Again!"
