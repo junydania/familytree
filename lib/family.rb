@@ -28,17 +28,30 @@ class Family
   end
 
   def self.member_input
-    print ">"
-    entry = gets.chomp.split(" ")
-    entries = entry.map{ |i| i.split '=' }.to_a
-    return entries
+    entries = nil
+    print "Input Parameter > "
+    entry = gets.chomp
+    unless entry.downcase == "quit"
+      check_space = entry.match(/\s/) ? "Yes" : "No" 
+      if check_space == "Yes"
+        reviewed_entry = entry.split(" ")
+        entries = reviewed_entry.map{ |i| i.split '=' }.to_a
+      else
+        entries = "Wrong Format"
+      end
+      return entries
+    end
+    puts "\n<<< au revoir >>> \n\n\n"
+    exit!
   end
 
 
   def self.save(new_member, name)
     return false unless Family.file_useable?
     File.open(@@filepath, "a") { |f| f << new_member.to_yaml }
+    puts "\n \n"
     puts "Welcome to the family, #{name}!"
+    puts "\n \n"
   end
 
 end
