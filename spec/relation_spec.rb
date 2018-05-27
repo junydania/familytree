@@ -111,6 +111,38 @@ describe 'Relation' do
             expect(@person_relation.has_granddaughters).to eq(expected_array)
         end
 
+        it 'add wife' do
+            input = [["Husband", "Bern"],["Wife", "Christine"]]
+            expected_output = "Saved"
+            FamilyTree.new('family.yml')
+            @person_relation = Relation.new(input)
+            expect(@person_relation.add_wife).to eq(expected_output)
+        end
+
+        it 'add husband' do
+            input = [["Wife", "Sarah"],["Husband", "Dania"]]
+            expected_output = "Saved"
+            FamilyTree.new('family.yml')
+            @person_relation = Relation.new(input)
+            expect(@person_relation.add_husband).to eq(expected_output)
+        end
+
+        it 'add son' do
+            input = [["Mother", "Sarah"],["Son", "Dania"]]
+            expected_output = "Saved"
+            FamilyTree.new('family.yml')
+            @person_relation = Relation.new(input)
+            expect(@person_relation.add_son).to eq(expected_output)
+        end
+
+        it 'add daughter' do
+            input = [["Mother", "Sarah"],["Daughter", "Josephine"]]
+            expected_output = "Saved"
+            FamilyTree.new('family.yml')
+            @person_relation = Relation.new(input)
+            expect(@person_relation.add_daughter).to eq(expected_output)
+        end
+
     end
     
 end

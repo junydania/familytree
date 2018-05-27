@@ -3,6 +3,7 @@ require 'yaml'
 require 'person'
 require 'family'
 require 'relation'
+require 'pry'
 
 class FamilyTree
 
@@ -257,74 +258,146 @@ class FamilyTree
     end
   end
 
-  def add
+  def second_add
     puts "\nAdd New Family Member\n\n".upcase
     print "Enter a new family member in the format"
     print "Mother=Sophia Son=Thomas \n"
     received_input = Family.member_input
     if received_input[0][0].capitalize == "Husband" and received_input[1][0].capitalize == "Wife"
-      sex = "Female"
-      husband_name = received_input[0][1].capitalize
-      data = Family.load_family_record
-      husband_record = data.detect{ |husband| husband["name"] == husband_name  }
-      if husband_record != nil 
-        wife_name = received_input[1][1].capitalize
-        new_person = Person.new(wife_name, sex)
-        parent_partner_id = husband_record["partner_id"]
-        new_member = { "name" => new_person.name,
-                        "sex" => new_person.sex,
-                        "root_id" => '',
-                        "parent_id" => parent_partner_id,
-                        "partner_id" => parent_partner_id            
-        }
-        Family.save(new_member, wife_name)          
+      new_wife = Relation.new(received_input)
+      add_wife = new_wife.add_wife
+      if add_wife == "Saved"
+        puts "\n \n"
+        puts "Welcome to the family, #{name}!"
+        puts "\n \n"
       else
-        puts "#{husband_name} is not a member of this family!"
-        exit!
-      end
-    elsif received_input[0][0].capitalize == "Wife" and received_input[1][0].capitalize == "Husband"
-      sex = "Male"
-      wife_name = received_input[0][1].capitalize
-      data = Family.load_family_record
-      wife_record = data.detect{ |wife| wife["name"] == wife_name  }
-      if wife_record != nil 
-        husband_name = received_input[1][1].capitalize
-        new_person = Person.new(husband_name, sex)
-        parent_partner_id = wife_record["partner_id"]
-        new_member = { "name" => new_person.name,
-                        "sex" => new_person.sex,
-                        "root_id" => '',
-                        "parent_id" => parent_partner_id,
-                        "partner_id" => parent_partner_id            
-        }
-        Family.save(new_member, husband_name)
-      else
-        puts "#{wife_name} is not a member of this family!"
-        exit!
-      end
-    elsif received_input[0][0].capitalize == "Mother" and received_input[1][0].capitalize == "Son"
-      sex = "Male"
-      mother_name = received_input[0][1].capitalize
-      data = Family.load_family_record
-      mother_record = data.detect{ |mother| mother["name"] == mother_name  }
-      if mother_record != nil 
-        son_name = received_input[1][1].capitalize
-        new_person = Person.new(son_name, sex)
-        root_id = mother_record["partner_id"]
-        parent_partner_id = new_person.generate_parent_partner_id 
-        new_member = { "name" => new_person.name,
-                        "sex" => new_person.sex,
-                        "root_id" => root_id,
-                        "parent_id" => parent_partner_id,
-                        "partner_id" => parent_partner_id            
-        }
-        Family.save(new_member, son_name)
-      else
-        puts "#{son_name} is not a member of this family!"
-        exit!
-      end        
+        puts "No wife" 
+      end    
     end
   end
+
+
+  # def add
+  #   puts "\nAdd New Family Member\n\n".upcase
+  #   print "Enter a new family member in the format"
+  #   print "Mother=Sophia Son=Thomas \n"
+  #   received_input = Family.member_input
+  #   if received_input[0][0].capitalize == "Husband" and received_input[1][0].capitalize == "Wife"
+  #     sex = "Female"
+  #     husband_name = received_input[0][1].capitalize
+  #     data = Family.load_family_record
+  #     husband_record = data.detect{ |husband| husband["name"] == husband_name  }
+  #     if husband_record != nil 
+  #       wife_name = received_input[1][1].capitalize
+  #       new_person = Person.new(wife_name, sex)
+  #       parent_partner_id = husband_record["partner_id"]
+  #       new_member = { "name" => new_person.name,
+  #                       "sex" => new_person.sex,
+  #                       "root_id" => '',
+  #                       "parent_id" => parent_partner_id,
+  #                       "partner_id" => parent_partner_id            
+  #       }
+  #       Family.save(new_member, wife_name)          
+  #     else
+  #       puts "#{husband_name} is not a member of this family!"
+  #       exit!
+  #     end
+  #   elsif received_input[0][0].capitalize == "Wife" and received_input[1][0].capitalize == "Husband"
+  #     sex = "Male"
+  #     wife_name = received_input[0][1].capitalize
+  #     data = Family.load_family_record
+  #     wife_record = data.detect{ |wife| wife["name"] == wife_name  }
+  #     if wife_record != nil 
+  #       husband_name = received_input[1][1].capitalize
+  #       new_person = Person.new(husband_name, sex)
+  #       parent_partner_id = wife_record["partner_id"]
+  #       new_member = { "name" => new_person.name,
+  #                       "sex" => new_person.sex,
+  #                       "root_id" => '',
+  #                       "parent_id" => parent_partner_id,
+  #                       "partner_id" => parent_partner_id            
+  #       }
+  #       Family.save(new_member, husband_name)
+  #     else
+  #       puts "#{wife_name} is not a member of this family!"
+  #       exit!
+  #     end
+  #   elsif received_input[0][0].capitalize == "Mother" and received_input[1][0].capitalize == "Son"
+  #     sex = "Male"
+  #     mother_name = received_input[0][1].capitalize
+  #     data = Family.load_family_record
+  #     mother_record = data.detect{ |mother| mother["name"] == mother_name  }
+  #     if mother_record != nil 
+  #       son_name = received_input[1][1].capitalize
+  #       new_person = Person.new(son_name, sex)
+  #       root_id = mother_record["partner_id"]
+  #       parent_partner_id = new_person.generate_parent_partner_id 
+  #       new_member = { "name" => new_person.name,
+  #                       "sex" => new_person.sex,
+  #                       "root_id" => root_id,
+  #                       "parent_id" => parent_partner_id,
+  #                       "partner_id" => parent_partner_id            
+  #       }
+  #       Family.save(new_member, son_name)
+  #     else
+  #       puts "#{son_name} is not a member of this family!"
+  #       exit!
+  #     end        
+  #   end
+  # end
+
+  def add
+    puts "\nAdd New Family Member\n\n".upcase
+    print "Enter a new family member in the format"
+    print "Mother=Sophia Son=Thomas \n"
+    received_input = Family.member_input
+    
+    if received_input[0][0].capitalize == "Husband" and received_input[1][0].capitalize == "Wife"
+      new_wife = Relation.new(received_input)
+      add_wife = new_wife.add_wife
+      if add_wife == "Saved"
+        puts "\n \n"
+        puts "Welcome to the family, #{received_input[1][1].capitalize}!"
+        puts "\n \n"
+      else
+        puts "#{received_input[0][1].capitalize} is not a member of this family!"
+      end    
+    
+    elsif received_input[0][0].capitalize == "Wife" and received_input[1][0].capitalize == "Husband"
+      new_husband = Relation.new(received_input)
+      add_husband = new_husband.add_husband
+      if add_husband == "Saved"
+        puts "\n \n"
+        puts "Welcome to the family, #{received_input[1][1].capitalize}!"
+        puts "\n \n"
+      else
+        puts "#{received_input[0][1].capitalize} is not a member of this family!"
+      end    
+    
+    elsif received_input[0][0].capitalize == "Mother" and received_input[1][0].capitalize == "Son"
+      new_son = Relation.new(received_input)
+      add_son = new_son.add_son
+      if add_son == "Saved"
+        puts "\n \n"
+        puts "Welcome to the family, #{received_input[1][1].capitalize}!"
+        puts "\n \n"
+      else
+        puts "#{received_input[0][1].capitalize} is not a member of this family!"
+      end    
+    
+    elsif received_input[0][0].capitalize == "Mother" and received_input[1][0].capitalize == "Daughter"
+      new_daughter = Relation.new(received_input)
+      add_daughter = new_daughter.add_daughter
+      if add_daughter == "Saved"
+        puts "\n \n"
+        puts "Welcome to the family, #{received_input[1][1].capitalize}!"
+        puts "\n \n"
+      else
+        puts "#{received_input[0][1].capitalize} is not a member of this family!"
+      end    
+    end
+  end
+
 
   def conclusion
     puts "\n<<< Goodbye >>> \n\n\n"

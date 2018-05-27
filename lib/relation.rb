@@ -15,6 +15,94 @@ class Relation
     end
 
 
+    def add_wife
+      add_status= nil
+      husband_name = @person_name.capitalize
+      husband_record = @@family_record.detect{ |husband| husband["name"] == husband_name  }
+      if husband_record != nil 
+        wife_name =  @relationship_type.capitalize
+        new_person = Person.new(@relationship_type, "Female")
+        husband_partner_id = husband_record["partner_id"]
+        new_member = { "name" => new_person.name,
+                        "sex" => new_person.sex,
+                        "root_id" => '',
+                        "parent_id" => husband_partner_id,
+                        "partner_id" => husband_partner_id            
+        }
+        add_status = Family.save(new_member)     
+      else
+        add_status= nil
+      end
+        return add_status
+    end
+
+    def add_husband
+        add_status= nil
+        wife_name = @person_name.capitalize
+        wife_record = @@family_record.detect{ |wife| wife["name"] == wife_name  }
+        if wife_record != nil 
+            husband_name =  @relationship_type.capitalize
+            new_person = Person.new(@relationship_type, "Male")
+            wife_partner_id = wife_record["partner_id"]
+            new_member = { "name" => new_person.name,
+                            "sex" => new_person.sex,
+                            "root_id" => '',
+                            "parent_id" => wife_partner_id,
+                            "partner_id" => wife_partner_id            
+            }
+            add_status = Family.save(new_member)     
+        else
+            add_status= nil
+        end
+            return add_status
+    end
+
+    def add_son
+        add_status= nil
+        mother_name = @person_name.capitalize
+        mother_record = @@family_record.detect{ |mother| mother["name"] == mother_name  }
+        if mother_record != nil 
+            son_name =  @relationship_type.capitalize
+            new_person = Person.new(@relationship_type, "Male")
+            mother_parent_id = mother_record["parent_id"]
+            new_parent_partner_id = new_person.generate_parent_partner_id 
+            new_member = { "name" => new_person.name,
+                            "sex" => new_person.sex,
+                            "root_id" => mother_parent_id,
+                            "parent_id" => new_parent_partner_id,
+                            "partner_id" => new_parent_partner_id            
+            }
+            add_status = Family.save(new_member)     
+        else
+            add_status= nil
+        end
+            return add_status
+    end
+
+    def add_daughter
+        add_status= nil
+        mother_name = @person_name.capitalize
+        mother_record = @@family_record.detect{ |mother| mother["name"] == mother_name  }
+        if mother_record != nil 
+            daughter_name =  @relationship_type.capitalize
+            new_person = Person.new(@relationship_type, "Female")
+            mother_parent_id = mother_record["parent_id"]
+            new_parent_partner_id = new_person.generate_parent_partner_id 
+            new_member = { "name" => new_person.name,
+                            "sex" => new_person.sex,
+                            "root_id" => mother_parent_id,
+                            "parent_id" => new_parent_partner_id,
+                            "partner_id" => new_parent_partner_id            
+            }
+            add_status = Family.save(new_member)     
+        else
+            add_status= nil
+        end
+            return add_status
+    end
+
+
+    
     def has_sons
         sons_array = []
         person_record = @@family_record.detect{ |person| person["name"] == @person_name  }

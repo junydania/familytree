@@ -48,12 +48,19 @@ class Family
     exit!
   end
 
-  def self.save(new_member, name)
+  # def self.save(new_member, name)
+  #   return false unless Family.file_useable?
+  #   File.open(@@filepath, "a") { |f| f << new_member.to_yaml }
+  #   puts "\n \n"
+  #   puts "Welcome to the family, #{name}!"
+  #   puts "\n \n"
+  # end
+
+  def self.save(new_member)
     return false unless Family.file_useable?
     File.open(@@filepath, "a") { |f| f << new_member.to_yaml }
-    puts "\n \n"
-    puts "Welcome to the family, #{name}!"
-    puts "\n \n"
+    return "Saved"
   end
+
 
 end
