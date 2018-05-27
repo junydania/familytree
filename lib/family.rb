@@ -43,7 +43,7 @@ class Family
       end
       return entries
     end
-    puts "\n<<< au revoir >>> \n\n\n"
+    puts "\n<<< Bye Bye >>> \n\n\n"
     exit!
   end
 

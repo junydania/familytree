@@ -3,7 +3,7 @@ require 'yaml'
 require 'person'
 require 'family'
 require 'relation'
-require 'pry'
+
 
 class FamilyTree
 
@@ -18,7 +18,7 @@ class FamilyTree
     Family.filepath = path
     if Family.file_useable?
       Family.load_family_record
-      
+
     else
       puts "Family Record must be loaded before you proceed. Exiting \n\n"
       exit!
@@ -120,7 +120,7 @@ class FamilyTree
         if sisters.length > 1
           sisters_names = sisters.join(", ")
           puts "#{received_input[1][1].capitalize}=#{sisters_names}"
-        elsif brothers.empty? == true
+        elsif sisters.empty? == true
           puts "#{received_input[0][1].capitalize} doesn't have a sister"
         elsif
           sister_name = sisters[0]

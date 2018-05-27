@@ -176,7 +176,6 @@ class Relation
         else
             sisters_array = []
         end
-
         return sisters_array     
     end
 
