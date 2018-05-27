@@ -6,6 +6,6 @@ $:.unshift(File.join(APP_ROOT, 'lib'))
 
 require 'family_tree'
 
-tree = FamilyTree.new('data/family.yml')
+tree = FamilyTree.new("data/family.yml")
 
 tree.launch!

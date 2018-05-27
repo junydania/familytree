@@ -1,4 +1,5 @@
 require 'family'
+require 'yaml'
 
 class Relation
 

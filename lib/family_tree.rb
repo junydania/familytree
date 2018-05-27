@@ -3,7 +3,7 @@ require 'yaml'
 require 'person'
 require 'family'
 require 'relation'
-
+require 'pry'
 
 class FamilyTree
 
@@ -18,6 +18,7 @@ class FamilyTree
     Family.filepath = path
     if Family.file_useable?
       Family.load_family_record
+      
     else
       puts "Family Record must be loaded before you proceed. Exiting \n\n"
       exit!
