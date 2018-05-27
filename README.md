@@ -9,6 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 The following are required to run the digital tree application
+
 ```
 Ruby
 Rspec
@@ -65,12 +66,15 @@ $ ruby init.rb
 Husband=name Wife=name
 Mother=name Son=name
 Mother=name Daughter=name
-
 ```
 
 ### Finding Relatives
 
 To check relations in the family tree, enter input in this format
+
+```
+$ Action > find
+```
 
 ```
 $ Input Parameter > Person=Alex Relation=Brothers
@@ -90,7 +94,6 @@ Person=name Relation=Granddaughters
 Person=name Relation=Grandsons
 Person=name Relation=Grandfather
 Person=name Relation=Grandmother
-
 ```
 
 ## Built With
@@ -102,4 +105,4 @@ Person=name Relation=Grandmother
 
 ## Authors
 
-* **Osegbemoh Daniaillie ** 
+* **Osegbemoh Dania ** 
