@@ -1,5 +1,4 @@
 require 'family'
-require 'pry'
 
 class Relation
 
@@ -21,12 +20,16 @@ class Relation
         person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
         person_parent_id = person_record["parent_id"]
         sons = @@family_record.find_all { |son| son["root_id"] == person_parent_id && son["sex"] == "Male" }
-        sons.each do |son|
-            son.each do |key, value|
-                if key == "name"
-                    sons_array.push(value)
+        if sons.any? == true
+            sons.each do |son|
+                son.each do |key, value|
+                    if key == "name"
+                        sons_array.push(value)
+                    end
                 end
             end
+        else
+            sons_array = []
         end
         return sons_array 
     end
@@ -37,12 +40,16 @@ class Relation
         person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
         person_parent_id = person_record["parent_id"]
         daughters = @@family_record.find_all { |daughter| daughter["root_id"] == person_parent_id && daughter["sex"] == "Female" }
-        daughters.each do |daughter|
-            daughter.each do |key, value|
-                if key == "name"
-                    daughters_array.push(value)
+        if daughters.any? == true
+            daughters.each do |daughter|
+                daughter.each do |key, value|
+                    if key == "name"
+                        daughters_array.push(value)
+                    end
                 end
-            end
+            end            
+        else
+            daughters_array= []
         end
         return daughters_array 
     end
@@ -53,12 +60,16 @@ class Relation
         person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
         person_root_id = person_record["root_id"]
         brothers = @@family_record.find_all { |brother| brother["root_id"] == person_root_id && brother["name"] != @person_name && brother["sex"] == "Male"}
-        brothers.each do |brother|
-            brother.each do |key, value|
-                if key == "name"
-                    brothers_array.push(value)
+        if brothers.any? == true
+            brothers.each do |brother|
+                brother.each do |key, value|
+                    if key == "name"
+                        brothers_array.push(value)
+                    end
                 end
             end
+        else
+            brothers_array = []
         end
         return brothers_array    
     end
@@ -68,13 +79,18 @@ class Relation
         person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
         person_root_id = person_record["root_id"]
         sisters = @@family_record.find_all { |sister| sister["root_id"] == person_root_id && sister["name"] != @person_name && sister["sex"] == "Female"}
-        sisters.each do |sister|
-            sister.each do |key, value|
-                if key == "name"
-                    sisters_array.push(value)
+        if sisters.any? == true 
+            sisters.each do |sister|
+                sister.each do |key, value|
+                    if key == "name"
+                        sisters_array.push(value)
+                    end
                 end
             end
+        else
+            sisters_array = []
         end
+
         return sisters_array     
     end
 
@@ -108,13 +124,17 @@ class Relation
                                         end
                                     end
         siblings_id_array.each do |parent_id|
-            cousins_record = @@family_record.find_all { |cousin| cousin["root_id"] == parent_id }
-            cousins_record.each do |cousin|
-                cousin.each do |key, value|
-                    if key == "name"
-                        cousins_array.push(value)
+            cousins_record = @@family_record.find_all { |cousin| cousin["root_id"] == parent_id && cousin["name"] !=  @person_name }
+            if cousins_record.any? == true
+                cousins_record.each do |cousin|
+                    cousin.each do |key, value|
+                        if key == "name"
+                            cousins_array.push(value)
+                        end
                     end
                 end
+            else
+                cousins_array = []
             end
         end
         return cousins_array      
@@ -124,8 +144,13 @@ class Relation
         father_name = nil
         person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
         person_root_id = person_record["root_id"]
-        father_record = @@family_record.detect { |father| father["parent_id"] == person_root_id && father["sex"] == "Male"}
-        father_name = father_record["name"]
+        if person_root_id.nil? == false
+            father_record = @@family_record.detect { |father| father["parent_id"] == person_root_id && father["sex"] == "Male"}
+            father_name = father_record["name"]
+        else
+            father_name
+        end
+
         return father_name        
     end
 
@@ -133,8 +158,13 @@ class Relation
         mother_name = nil
         person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
         person_root_id = person_record["root_id"]
-        mother_record = @@family_record.detect { |mother| mother["parent_id"] == person_root_id && mother["sex"] == "Female"}
-        mother_name = mother_record["name"]
+        if person_root_id.nil? == false
+            mother_record = @@family_record.detect { |mother| mother["parent_id"] == person_root_id && mother["sex"] == "Female"}
+            mother_name = mother_record["name"]
+        else
+            mother_name
+        end
+
         return mother_name
     end
 
@@ -158,7 +188,7 @@ class Relation
                         end
                       end
         parent_name = @@family_record.detect { |parent| parent["root_id"] == parent_root_id && parent["parent_id"] == first_person_root_id }
-        parent_siblings = @@family_record.find_all { |sibling| sibling["root_id"] == parent_root_id && sibling["name"] != parent_name && sibling["sex"] == "Female" }
+        parent_siblings = @@family_record.find_all { |sibling| sibling["root_id"] == parent_root_id && sibling["name"] != parent_name && sibling["sex"].capitalize == "Female" }
         if parent_siblings.any? == true
             parent_siblings.each do |parent_sibling|
                 parent_sibling.each do |key, value|
@@ -167,10 +197,11 @@ class Relation
                     end
                 end
             end 
-            return aunts_array
         else
-            return "#{@person_name} doesn't have an aunt"
-        end             
+            aunts_array = []
+        end   
+
+        return aunts_array          
     end
 
     def has_uncles
@@ -193,7 +224,7 @@ class Relation
                         end
                         end
         parent_name = @@family_record.detect { |parent| parent["root_id"] == parent_root_id && parent["parent_id"] == first_person_root_id }
-        parent_siblings = @@family_record.find_all { |sibling| sibling["root_id"] == parent_root_id && sibling["name"] != parent_name && sibling["sex"] == "Male" }
+        parent_siblings = @@family_record.find_all { |sibling| sibling["root_id"] == parent_root_id && sibling["name"] != parent_name && sibling["sex"].capitalize == "Male" }
         if parent_siblings.any? == true
             parent_siblings.each do |parent_sibling|
                 parent_sibling.each do |key, value|
@@ -291,7 +322,6 @@ class Relation
                 end
             end 
         end
-
         return grandsons 
     end
 

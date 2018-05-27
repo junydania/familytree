@@ -13,7 +13,6 @@ class Person
       id = SecureRandom.hex(5)
       return id
     end
-
 end
 
 

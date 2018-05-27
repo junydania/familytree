@@ -1,3 +1,6 @@
+require 'yaml'
+require 'pry'
+
 class Family
   
   @@filepath = nil
@@ -44,7 +47,6 @@ class Family
     puts "\n<<< au revoir >>> \n\n\n"
     exit!
   end
-
 
   def self.save(new_member, name)
     return false unless Family.file_useable?
