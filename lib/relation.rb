@@ -101,8 +101,6 @@ class Relation
             return add_status
     end
 
-
-    
     def has_sons
         sons_array = []
         person_record = @@family_record.detect{ |person| person["name"] == @person_name  }
@@ -121,7 +119,6 @@ class Relation
         end
         return sons_array 
     end
-
 
     def has_daughters
         daughters_array = []
